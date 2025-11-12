@@ -6,7 +6,6 @@ import {
   CreateProductRequest,
   UpdateProductRequest,
   UpdateProductQuery,
-  GetProductsQuery,
 } from "../dto/product.dto";
 
 const router = express.Router();
@@ -21,9 +20,12 @@ router.post(
         CreateProductRequest,
         req.body
       );
+      console.log("Errors: ", errors);
+      console.log("Input: ", input);
       if (errors) {
         return res.status(400).send({ message: errors });
       }
+
       const data = await catalogService.createProduct(input);
       return res.status(201).send(data);
     } catch (error) {
@@ -36,7 +38,7 @@ router.post(
 router.patch(
   "/products/:id",
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log("We are in the update middleware");
+    console.log("We are in the update middleware", req.body);
     try {
       const { errors, input } = await RequestValidator(
         UpdateProductRequest,

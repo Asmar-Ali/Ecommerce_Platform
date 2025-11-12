@@ -3,6 +3,7 @@ import catalogRoutes from './api/catalog.routes';
 
 const app = express();
 
+app.use(express.json());
 
 app.get("/", (req : Request, res : Response, next : NextFunction) => {  
     res.json(200).send({

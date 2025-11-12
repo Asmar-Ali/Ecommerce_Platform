@@ -19,18 +19,22 @@ export const RequestValidator = async <T>(
   type: ClassConstructor<T>,
   body: any
 ): Promise<{ errors: boolean | string; input: T }> => {
+   console.log("Request body", body)
   const input = plainToClass(type, body);
+  try {
+    const errors = await validationError(input);
+    if (errors) {
+      const errorMessage = errors
+        .map((error: ValidationError) =>
+          (Object as any).values(error.constraints)
+        )
+        .join(", ");
+      return { errors: errorMessage, input };
+    }
 
-  const errors = await validationError(input);
-  if (errors) {
-    const errorMessage = errors
-      .map((error: ValidationError) =>
-        (Object as any).values(error.constraints)
-      )
-      .join(", ");
-    return { errors: errorMessage, input };
+    return { errors: false, input };
+  } catch (error) {
+    const err = error as Error;
+    return { errors: err.message, input };
   }
-
-  return { errors: false, input };
 };
-

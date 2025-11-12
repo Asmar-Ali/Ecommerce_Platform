@@ -8,10 +8,17 @@ export class CatalogService {
   constructor(repository: ICatalogRepository) {
     this._repository = repository;
   }
+  
   async createProduct(input: any) {
-    console.log("Create Product Service was called.")
-    const result = await this._repository.create(input)
-    return result;
+    try {
+      console.log("Create Product Service was called.")
+      const result = await this._repository.create(input)
+      return result;
+
+    } catch (err) {
+      const error = err as Error;
+      console.log("Error in create product service", error.message)
+    }
   }
   async updateProduct(id: string, data: any) {
     const result = await this._repository.update(id, data)
