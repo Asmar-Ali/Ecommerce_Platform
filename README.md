@@ -1,4 +1,4 @@
-# Porduction ready Ecommerce Platform
+# Porduction Ready Ecommerce Platform
 A production-ready e-commerce microservices architecture built with Node.js, demonstrating event-driven communication via Apache Kafka, distributed data management, and modern software engineering practices.
 
 ## What It Is
